@@ -6,23 +6,25 @@ description: Create and manage collections (groups of files) for organized query
 
 Collections let you group files together for targeted querying. When you chat with a collection, only the files in that collection are searched.
 
+---
+
 ## Create a collection
 
-### `POST /api/v1/collections`
+`POST` `https://api.knowbase.ai/api/v1/collections`
 
-### Headers
+#### Headers
 
-| Name            | Type   | Description              |
-| --------------- | ------ | ------------------------ |
-| Authorization\* | string | `Bearer YOUR_API_TOKEN`  |
-| Content-Type\*  | string | `application/json`       |
+| Name | Type | Description |
+|------|------|-------------|
+| Authorization* | string | `Bearer YOUR_API_TOKEN` |
+| Content-Type* | string | `application/json` |
 
-### Request Body
+#### Request Body
 
-| Name       | Type   | Description                          |
-| ---------- | ------ | ------------------------------------ |
-| name\*     | string | Name of the collection               |
-| file\_ids\* | array  | List of file ID strings to include   |
+| Name | Type | Description |
+|------|------|-------------|
+| name* | string | Name of the collection |
+| file_ids* | array | List of file ID strings to include |
 
 ```json
 {
@@ -34,7 +36,7 @@ Collections let you group files together for targeted querying. When you chat wi
 }
 ```
 
-### Response (201: Created)
+#### Response (201: Created)
 
 ```json
 {
@@ -42,8 +44,8 @@ Collections let you group files together for targeted querying. When you chat wi
   "name": "Q4 Reports",
   "created_at": "2025-03-15",
   "files": [
-    { "id": "a1b2c3d4-...", "filename": "report.pdf", "type": "pdf", "status": "success" },
-    { "id": "b2c3d4e5-...", "filename": "analysis.docx", "type": "word", "status": "success" }
+    {"id": "a1b2c3d4-...", "filename": "report.pdf", "type": "pdf", "status": "success"},
+    {"id": "b2c3d4e5-...", "filename": "analysis.docx", "type": "word", "status": "success"}
   ]
 }
 ```
@@ -52,9 +54,9 @@ Collections let you group files together for targeted querying. When you chat wi
 
 ## List all collections
 
-### `GET /api/v1/collections`
+`GET` `https://api.knowbase.ai/api/v1/collections`
 
-### Response (200: OK)
+#### Response (200: OK)
 
 ```json
 {
@@ -64,7 +66,7 @@ Collections let you group files together for targeted querying. When you chat wi
       "name": "Q4 Reports",
       "created_at": "2025-03-15",
       "files": [
-        { "id": "a1b2c3d4-...", "filename": "report.pdf", "type": "pdf", "status": "success" }
+        {"id": "a1b2c3d4-...", "filename": "report.pdf", "type": "pdf", "status": "success"}
       ]
     }
   ]
@@ -75,7 +77,7 @@ Collections let you group files together for targeted querying. When you chat wi
 
 ## Get collection details
 
-### `GET /api/v1/collections/{collection_id}`
+`GET` `https://api.knowbase.ai/api/v1/collections/{collection_id}`
 
 Returns the collection with its files.
 
@@ -83,11 +85,11 @@ Returns the collection with its files.
 
 ## Delete a collection
 
-### `DELETE /api/v1/collections/{collection_id}`
+`DELETE` `https://api.knowbase.ai/api/v1/collections/{collection_id}`
 
-Deletes the collection. **The files inside are NOT deleted** — they remain in your library.
+Deletes the collection. **The files inside are NOT deleted** -- they remain in your library.
 
-### Response (200: OK)
+#### Response (200: OK)
 
 ```json
 {
@@ -97,7 +99,7 @@ Deletes the collection. **The files inside are NOT deleted** — they remain in 
 
 ---
 
-## Example: Create and query a collection
+### Example: Create and query a collection
 
 ```python
 import requests

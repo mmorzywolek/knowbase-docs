@@ -4,26 +4,28 @@ description: Get the AI-generated summary for a file.
 
 # Get File Summary
 
-## `GET /api/v1/files/{file_id}/summary`
+## Get summary by file ID
+
+`GET` `https://api.knowbase.ai/api/v1/files/{file_id}/summary`
 
 Returns the AI-generated summary for a file. If the summary hasn't been generated yet, returns `status: "processing"`.
 
-### Headers
+#### Headers
 
-| Name            | Type   | Description              |
-| --------------- | ------ | ------------------------ |
-| Authorization\* | string | `Bearer YOUR_API_TOKEN`  |
+| Name | Type | Description |
+|------|------|-------------|
+| Authorization* | string | `Bearer YOUR_API_TOKEN` |
 
-### Path Parameters
+#### Path Parameters
 
-| Name      | Type   | Description           |
-| --------- | ------ | --------------------- |
-| file\_id\* | string | The UUID of the file  |
+| Name | Type | Description |
+|------|------|-------------|
+| file_id* | string | The UUID of the file |
 
-### Responses
+#### Responses
 
-{% tabs %}
-{% tab title="200: Summary ready" %}
+**200: OK** Summary available
+
 ```json
 {
   "file_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -31,9 +33,9 @@ Returns the AI-generated summary for a file. If the summary hasn't been generate
   "status": "ready"
 }
 ```
-{% endtab %}
 
-{% tab title="200: Still processing" %}
+**200: OK** Summary still processing
+
 ```json
 {
   "file_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -41,8 +43,6 @@ Returns the AI-generated summary for a file. If the summary hasn't been generate
   "status": "processing"
 }
 ```
-{% endtab %}
-{% endtabs %}
 
 ### Example
 

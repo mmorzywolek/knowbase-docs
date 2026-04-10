@@ -2,8 +2,10 @@
 
 ## 1. Get your API token
 
+Your API requests are authenticated using a Bearer token. To obtain your token:
+
 1. Log into [app.knowbase.ai](https://app.knowbase.ai)
-2. Go to **Account** → **Manage Account** → **Generate API Key**
+2. Go to **Account** > **Manage Account** > **Generate API Key**
 3. Copy your API token
 
 You need a **Pro** or **Team** plan to access the API.
@@ -11,9 +13,9 @@ You need a **Pro** or **Team** plan to access the API.
 ### Rate Limits
 
 | Plan | Per Minute | Per Hour | Per Day |
-| ---- | ---------- | -------- | ------- |
-| Pro  | 20         | 200      | 2,000   |
-| Team | 60         | 600      | 5,000   |
+|------|-----------|----------|---------|
+| Pro  | 20        | 200      | 2,000   |
+| Team | 60        | 600      | 5,000   |
 
 ## 2. Upload a file
 
@@ -32,20 +34,19 @@ print(data)
 
 ## 3. Check file status
 
-Files need processing time. Poll until status is `success`:
+Files need processing time (embedding). Poll until status is `success`:
 
 ```python
 file_id = data["file_id"]
-response = requests.get(
-    f"https://api.knowbase.ai/api/v1/files/{file_id}",
-    headers=headers
-)
+response = requests.get(f"https://api.knowbase.ai/api/v1/files/{file_id}", headers=headers)
 print(response.json()["status"])  # "success" when ready
 ```
 
 ## 4. Chat with your documents
 
 ```python
+import json
+
 response = requests.post(
     "https://api.knowbase.ai/api/v1/chat",
     headers={**headers, "Content-Type": "application/json"},
@@ -56,13 +57,13 @@ response = requests.post(
 )
 result = response.json()
 print(result["answer"])
-print(result["sources"])
-print(result["conversation_id"])
+print(result["sources"])       # Source citations
+print(result["conversation_id"])  # Use for follow-up questions
 ```
 
 ## 5. Follow-up questions
 
-Use the `conversation_id` to maintain context:
+Use the `conversation_id` to ask follow-up questions with context:
 
 ```python
 response = requests.post(
@@ -113,10 +114,8 @@ while True:
     time.sleep(5)
 
 # 3. Chat
-answer = requests.post(
-    f"{BASE}/chat", headers=headers,
-    json={"question": "Summarize this document", "file_ids": [file_id]}
-).json()
+answer = requests.post(f"{BASE}/chat", headers=headers,
+    json={"question": "Summarize this document", "file_ids": [file_id]}).json()
 print(answer["answer"])
 
 # 4. Clean up

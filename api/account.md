@@ -4,17 +4,19 @@ description: Check your subscription tier, quotas, and current usage.
 
 # Account
 
-## `GET /api/v1/account`
+## Get account info
+
+`GET` `https://api.knowbase.ai/api/v1/account`
 
 Returns your subscription tier, quota limits, and current usage.
 
-### Headers
+#### Headers
 
-| Name            | Type   | Description              |
-| --------------- | ------ | ------------------------ |
-| Authorization\* | string | `Bearer YOUR_API_TOKEN`  |
+| Name | Type | Description |
+|------|------|-------------|
+| Authorization* | string | `Bearer YOUR_API_TOKEN` |
 
-### Response (200: OK)
+#### Response (200: OK)
 
 ```json
 {
@@ -40,7 +42,8 @@ import requests
 url = "https://api.knowbase.ai/api/v1/account"
 headers = {"Authorization": "Bearer YOUR_API_TOKEN"}
 
-account = requests.get(url, headers=headers).json()
+response = requests.get(url, headers=headers)
+account = response.json()
 
 print(f"Plan: {account['tier']}")
 print(f"Queries: {account['quotas']['queries_used']}/{account['quotas']['queries_limit']}")

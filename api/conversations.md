@@ -4,15 +4,17 @@ description: List, view, and delete chat conversations.
 
 # Conversations
 
-Conversations are automatically created when you use the `/chat` endpoint. Each conversation maintains chat history for follow-up questions.
+Conversations are automatically created when you use the `/chat` endpoint. Each conversation has a unique ID and maintains chat history for follow-up questions.
+
+---
 
 ## List conversations
 
-### `GET /api/v1/conversations`
+`GET` `https://api.knowbase.ai/api/v1/conversations`
 
-Returns all conversations, ordered by most recent.
+Returns all conversations with titles and message counts, ordered by most recent.
 
-### Response (200: OK)
+#### Response (200: OK)
 
 ```json
 {
@@ -37,11 +39,11 @@ Returns all conversations, ordered by most recent.
 
 ## Get conversation messages
 
-### `GET /api/v1/conversations/{conversation_id}`
+`GET` `https://api.knowbase.ai/api/v1/conversations/{conversation_id}`
 
-Returns all messages in chronological order.
+Returns all messages in a conversation in chronological order.
 
-### Response (200: OK)
+#### Response (200: OK)
 
 ```json
 {
@@ -68,11 +70,11 @@ Returns all messages in chronological order.
 
 ## Delete a conversation
 
-### `DELETE /api/v1/conversations/{conversation_id}`
+`DELETE` `https://api.knowbase.ai/api/v1/conversations/{conversation_id}`
 
 Permanently deletes a conversation and all its messages.
 
-### Response (200: OK)
+#### Response (200: OK)
 
 ```json
 {
@@ -80,9 +82,7 @@ Permanently deletes a conversation and all its messages.
 }
 ```
 
----
-
-## Example
+### Example
 
 ```python
 import requests
@@ -96,12 +96,10 @@ convos = requests.get(f"{BASE}/conversations", headers=headers).json()
 for c in convos["conversations"]:
     print(f"{c['title']} ({c['message_count']} messages)")
 
-# Get messages
+# Get messages for a conversation
 messages = requests.get(
-    f"{BASE}/conversations/{convos['conversations'][0]['id']}",
-    headers=headers
+    f"{BASE}/conversations/{convos['conversations'][0]['id']}", headers=headers
 ).json()
-
 for msg in messages["messages"]:
     print(f"Q: {msg['question']}")
     print(f"A: {msg['answer'][:100]}...\n")

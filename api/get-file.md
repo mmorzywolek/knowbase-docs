@@ -4,23 +4,27 @@ description: Get details and processing status for a specific file.
 
 # Get File Details
 
-## `GET /api/v1/files/{file_id}`
+## Get a file by ID
+
+`GET` `https://api.knowbase.ai/api/v1/files/{file_id}`
 
 Returns details and processing status for a specific file.
 
-### Headers
+#### Headers
 
-| Name            | Type   | Description              |
-| --------------- | ------ | ------------------------ |
-| Authorization\* | string | `Bearer YOUR_API_TOKEN`  |
+| Name | Type | Description |
+|------|------|-------------|
+| Authorization* | string | `Bearer YOUR_API_TOKEN` |
 
-### Path Parameters
+#### Path Parameters
 
-| Name      | Type   | Description           |
-| --------- | ------ | --------------------- |
-| file\_id\* | string | The UUID of the file  |
+| Name | Type | Description |
+|------|------|-------------|
+| file_id* | string | The UUID of the file |
 
-### Response (200: OK)
+#### Responses
+
+**200: OK**
 
 ```json
 {
@@ -35,7 +39,7 @@ Returns details and processing status for a specific file.
 }
 ```
 
-### Error (404: Not Found)
+**404: Not Found**
 
 ```json
 {

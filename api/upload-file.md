@@ -4,28 +4,28 @@ description: Upload a document to Knowbase for processing and AI-powered queryin
 
 # Upload File
 
-## `POST /api/v1/files`
+## Upload a document for processing
 
-Upload a file to your library. The file will be automatically processed for AI-powered search and chat.
+`POST` `https://api.knowbase.ai/api/v1/files`
 
-**Supported types:** PDF, DOCX, DOC, TXT, MD, PPTX, PPT, and audio/video files. **Max size:** 100 MB.
+Upload a file to your Knowbase library. The file will be automatically processed (embedded) for AI-powered search and chat. Supported types: PDF, DOCX, DOC, TXT, MD, PPTX, PPT, and audio/video files. Maximum size: 100 MB.
 
-### Headers
+#### Headers
 
-| Name            | Type   | Description              |
-| --------------- | ------ | ------------------------ |
-| Authorization\* | string | `Bearer YOUR_API_TOKEN`  |
+| Name | Type | Description |
+|------|------|-------------|
+| Authorization* | string | `Bearer YOUR_API_TOKEN` |
 
-### Request Body (multipart/form-data)
+#### Request Body
 
-| Name   | Type | Description         |
-| ------ | ---- | ------------------- |
-| file\* | file | The file to upload  |
+| Name | Type | Description |
+|------|------|-------------|
+| file* | multipart/form-data | The file to upload |
 
-### Responses
+#### Responses
 
-{% tabs %}
-{% tab title="200: OK" %}
+**200: OK** File uploaded successfully
+
 ```json
 {
   "message": "File uploaded successfully",
@@ -33,9 +33,9 @@ Upload a file to your library. The file will be automatically processed for AI-p
   "status": "processing"
 }
 ```
-{% endtab %}
 
-{% tab title="400: Bad Request" %}
+**400: Bad Request** Quota exceeded or unsupported file
+
 ```json
 {
   "error": {
@@ -44,9 +44,9 @@ Upload a file to your library. The file will be automatically processed for AI-p
   }
 }
 ```
-{% endtab %}
 
-{% tab title="401: Unauthorized" %}
+**401: Unauthorized** Invalid or missing token
+
 ```json
 {
   "error": {
@@ -55,9 +55,9 @@ Upload a file to your library. The file will be automatically processed for AI-p
   }
 }
 ```
-{% endtab %}
 
-{% tab title="429: Too Many Requests" %}
+**429: Too Many Requests** Rate limit exceeded
+
 ```json
 {
   "error": {
@@ -66,13 +66,9 @@ Upload a file to your library. The file will be automatically processed for AI-p
   }
 }
 ```
-{% endtab %}
-{% endtabs %}
 
-### Examples
+### Example
 
-{% tabs %}
-{% tab title="Python" %}
 ```python
 import requests
 
@@ -83,28 +79,22 @@ files = {"file": ("document.pdf", open("document.pdf", "rb"), "application/pdf")
 response = requests.post(url, headers=headers, files=files)
 print(response.json())
 ```
-{% endtab %}
 
-{% tab title="JavaScript" %}
 ```javascript
 const form = new FormData();
 form.append("file", fs.createReadStream("document.pdf"));
 
 const response = await fetch("https://api.knowbase.ai/api/v1/files", {
   method: "POST",
-  headers: { Authorization: "Bearer YOUR_API_TOKEN" },
-  body: form,
+  headers: { "Authorization": "Bearer YOUR_API_TOKEN" },
+  body: form
 });
 const data = await response.json();
 console.log(data.file_id);
 ```
-{% endtab %}
 
-{% tab title="cURL" %}
 ```bash
 curl -X POST https://api.knowbase.ai/api/v1/files \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -F "file=@document.pdf"
 ```
-{% endtab %}
-{% endtabs %}

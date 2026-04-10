@@ -4,17 +4,21 @@ description: Retrieve all files in your library with their status and metadata.
 
 # List Files
 
-## `GET /api/v1/files`
+## Get all files in your library
 
-Returns all files in your library with their processing status, size, type, and metadata.
+`GET` `https://api.knowbase.ai/api/v1/files`
 
-### Headers
+Returns a list of all files in your library with their processing status, size, type, and other metadata.
 
-| Name            | Type   | Description              |
-| --------------- | ------ | ------------------------ |
-| Authorization\* | string | `Bearer YOUR_API_TOKEN`  |
+#### Headers
 
-### Response (200: OK)
+| Name | Type | Description |
+|------|------|-------------|
+| Authorization* | string | `Bearer YOUR_API_TOKEN` |
+
+#### Responses
+
+**200: OK** Successfully retrieved files
 
 ```json
 {
@@ -43,14 +47,14 @@ Returns all files in your library with their processing status, size, type, and 
 }
 ```
 
-### File status values
+**File status values:**
 
-| Status                     | Meaning                                    |
-| -------------------------- | ------------------------------------------ |
-| `success`                  | Ready for querying                         |
-| `embed_file_started`       | Currently being processed                  |
-| `transcribe_file_started`  | Audio/video being transcribed              |
-| `failure`                  | Processing failed (check `errors` field)   |
+| Status | Meaning |
+|--------|---------|
+| `success` | Ready for querying |
+| `embed_file_started` | Currently being processed |
+| `transcribe_file_started` | Audio/video being transcribed |
+| `failure` | Processing failed (check `errors` field) |
 
 ### Example
 
@@ -63,4 +67,9 @@ headers = {"Authorization": "Bearer YOUR_API_TOKEN"}
 response = requests.get(url, headers=headers)
 for file in response.json()["files"]:
     print(f"{file['filename']} - {file['status']}")
+```
+
+```bash
+curl https://api.knowbase.ai/api/v1/files \
+  -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
