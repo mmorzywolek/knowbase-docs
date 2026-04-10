@@ -7,7 +7,7 @@ description: All the ways to add content to your knowledge base
 ## Upload methods
 
 ### Drag and drop
-Go to the **Upload** tab and drag files directly onto the drop zone. You can drop up to 50 files at once.
+Go to the **New File** tab and drag files directly onto the drop zone. You can drop up to 50 files at once.
 
 <!-- screenshot: upload-drag-and-drop -->
 

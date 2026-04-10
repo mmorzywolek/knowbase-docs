@@ -6,7 +6,7 @@ description: Add your first document, video, or audio file to Knowbase
 
 ## How to upload
 
-1. Click the **Upload** tab in the top navigation
+1. Click the **New File** tab in the top navigation
 2. Drag and drop a file onto the upload area, or click to browse your files
 3. Wait for processing — the file status will change from "Processing" to "Ready"
 
