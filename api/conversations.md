@@ -14,6 +14,12 @@ Conversations are automatically created when you use the `/chat` endpoint. Each 
 
 Returns all conversations with titles and message counts, ordered by most recent.
 
+#### Query parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| session_id | string | No | Filter to one end user's conversations only. See [Filter by session](#filter-by-session). |
+
 #### Response (200: OK)
 
 ```json
@@ -34,6 +40,16 @@ Returns all conversations with titles and message counts, ordered by most recent
   ]
 }
 ```
+
+### Filter by session
+
+Platform integrators serving multiple end users under one API account (see [Per-end-user sessions](chat.md#per-end-user-sessions)) can pass `?session_id=...` to fetch a single end user's conversations only:
+
+```
+GET /api/v1/conversations?session_id=stu_42
+```
+
+The response only includes conversations whose messages were sent with that `session_id`. Use this to render a single end user's chat history in your UI.
 
 ---
 

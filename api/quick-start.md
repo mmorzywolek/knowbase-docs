@@ -89,6 +89,32 @@ response = requests.post(
 )
 ```
 
+## 7. Building a multi-user platform
+
+If you're integrating Knowbase into a product where each of your end users has their own chat history (e.g. a tutoring app with thousands of students), pass a stable `session_id` per end user. Same `session_id` continues the same thread; different `session_id`s are fully isolated.
+
+```python
+# Student A's question
+requests.post(f"{BASE}/chat", headers=headers, json={
+    "question": "What is photosynthesis?",
+    "session_id": "stu_42",
+})
+
+# Student A's follow-up — same session, same thread
+requests.post(f"{BASE}/chat", headers=headers, json={
+    "question": "And cellular respiration?",
+    "session_id": "stu_42",
+})
+
+# Student B — fresh, isolated history
+requests.post(f"{BASE}/chat", headers=headers, json={
+    "question": "Hi, can you help me?",
+    "session_id": "stu_99",
+})
+```
+
+See [Per-end-user sessions](chat.md#per-end-user-sessions) for the full reference.
+
 ## Full workflow example
 
 ```python

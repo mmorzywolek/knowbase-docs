@@ -27,6 +27,7 @@ The chat endpoint is the core of the Knowbase API. Ask questions about your docu
 | file_ids | array | No | List of file IDs to query. Omit to search entire library |
 | collection_id | string | No | Collection ID to query (alternative to file_ids) |
 | conversation_id | string | No | Continue a previous conversation for follow-up questions |
+| session_id | string | No | Stable identifier for one of your end users (see [Per-end-user sessions](#per-end-user-sessions)) |
 | thinking_mode | boolean | No | Enable advanced multi-step reasoning (Pro/Team only) |
 
 #### Example request
@@ -61,7 +62,8 @@ The chat endpoint is the core of the Knowbase API. Ask questions about your docu
       "documentType": "pdf"
     }
   ],
-  "conversation_id": "d4e5f6a7-b8c9-0123-def0-1234567890ab"
+  "conversation_id": "d4e5f6a7-b8c9-0123-def0-1234567890ab",
+  "session_id": null
 }
 ```
 
@@ -175,3 +177,46 @@ Set `thinking_mode: true` for complex questions that benefit from multi-step rea
 ```
 
 In streaming mode, you'll receive additional `thinking` events showing the AI's reasoning progress.
+
+---
+
+## Per-end-user sessions
+
+If you're integrating Knowbase into a platform that serves multiple end users (e.g. a tutoring app where each student has their own chat history), pass a stable `session_id` for each end user. Same `session_id` continues the same conversation; different `session_id`s under the same API account are fully isolated — no cross-user history leakage.
+
+You don't need to track Knowbase's `conversation_id` on your side; just send your own end-user identifier as `session_id` and we'll resolve it to the right thread.
+
+#### Example: two students under one API account
+
+```json
+// First call for student "stu_42"
+POST /api/v1/chat
+{
+  "question": "What is photosynthesis?",
+  "session_id": "stu_42"
+}
+// → returns { "answer": "...", "conversation_id": "uuid-A", "session_id": "stu_42" }
+
+// Follow-up for the same student — same conversation continues
+POST /api/v1/chat
+{
+  "question": "And how does it differ from cellular respiration?",
+  "session_id": "stu_42"
+}
+// → returns { "answer": "...", "conversation_id": "uuid-A", "session_id": "stu_42" }
+
+// Different student — fresh, isolated history
+POST /api/v1/chat
+{
+  "question": "Hello, can you help me?",
+  "session_id": "stu_99"
+}
+// → returns { "answer": "...", "conversation_id": "uuid-B", "session_id": "stu_99" }
+```
+
+#### Notes
+
+- `session_id` is an opaque string of your choice (max 255 chars). We recommend using your platform's stable user/student identifier.
+- If you send both `conversation_id` and `session_id`, `conversation_id` wins (back-compat).
+- To list a single end user's conversations, see [Listing conversations by session](conversations.md#filter-by-session).
+- Quotas and rate limits are enforced **per API account**, not per session. For high-volume platform integrations, contact us about an Enterprise plan.
