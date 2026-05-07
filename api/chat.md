@@ -180,43 +180,43 @@ In streaming mode, you'll receive additional `thinking` events showing the AI's 
 
 ---
 
-## Per-end-user sessions
+## Per-user sessions
 
-If you're integrating Knowbase into a platform that serves multiple end users (e.g. a tutoring app where each student has their own chat history), pass a stable `session_id` for each end user. Same `session_id` continues the same conversation; different `session_id`s under the same API account are fully isolated — no cross-user history leakage.
+If you're integrating Knowbase into a product that serves multiple end users, pass a stable `session_id` for each user. Same `session_id` continues the same conversation; different `session_id`s under the same API account are fully isolated — no cross-user history leakage.
 
-You don't need to track Knowbase's `conversation_id` on your side; just send your own end-user identifier as `session_id` and we'll resolve it to the right thread.
+You don't need to track Knowbase's `conversation_id` on your side; just send your own user identifier as `session_id` and we'll resolve it to the right thread.
 
-#### Example: two students under one API account
+#### Example: two users under one API account
 
 ```json
-// First call for student "stu_42"
+// First call for user "usr_42"
 POST /api/v1/chat
 {
-  "question": "What is photosynthesis?",
-  "session_id": "stu_42"
+  "question": "What were the key revenue drivers in Q4?",
+  "session_id": "usr_42"
 }
-// → returns { "answer": "...", "conversation_id": "uuid-A", "session_id": "stu_42" }
+// → returns { "answer": "...", "conversation_id": "uuid-A", "session_id": "usr_42" }
 
-// Follow-up for the same student — same conversation continues
+// Follow-up for the same user — same conversation continues
 POST /api/v1/chat
 {
-  "question": "And how does it differ from cellular respiration?",
-  "session_id": "stu_42"
+  "question": "Can you elaborate on the SaaS growth?",
+  "session_id": "usr_42"
 }
-// → returns { "answer": "...", "conversation_id": "uuid-A", "session_id": "stu_42" }
+// → returns { "answer": "...", "conversation_id": "uuid-A", "session_id": "usr_42" }
 
-// Different student — fresh, isolated history
+// Different user — fresh, isolated history
 POST /api/v1/chat
 {
-  "question": "Hello, can you help me?",
-  "session_id": "stu_99"
+  "question": "Summarize the meeting notes",
+  "session_id": "usr_99"
 }
-// → returns { "answer": "...", "conversation_id": "uuid-B", "session_id": "stu_99" }
+// → returns { "answer": "...", "conversation_id": "uuid-B", "session_id": "usr_99" }
 ```
 
 #### Notes
 
-- `session_id` is an opaque string of your choice (max 255 chars). We recommend using your platform's stable user/student identifier.
+- `session_id` is an opaque string of your choice (max 255 chars). We recommend using your product's stable user identifier.
 - If you send both `conversation_id` and `session_id`, `conversation_id` wins (back-compat).
-- To list a single end user's conversations, see [Listing conversations by session](conversations.md#filter-by-session).
-- Quotas and rate limits are enforced **per API account**, not per session. For high-volume platform integrations, contact us about an Enterprise plan.
+- To list a single user's conversations, see [Listing conversations by session](conversations.md#filter-by-session).
+- Quotas and rate limits are enforced **per API account**, not per session. For high-volume integrations, contact us about an Enterprise plan.

@@ -89,31 +89,31 @@ response = requests.post(
 )
 ```
 
-## 7. Building a multi-user platform
+## 7. Serving multiple users under one account
 
-If you're integrating Knowbase into a product where each of your end users has their own chat history (e.g. a tutoring app with thousands of students), pass a stable `session_id` per end user. Same `session_id` continues the same thread; different `session_id`s are fully isolated.
+If you're integrating Knowbase into a product where each of your users has their own chat history, pass a stable `session_id` per user. Same `session_id` continues the same thread; different `session_id`s are fully isolated.
 
 ```python
-# Student A's question
+# User A's question
 requests.post(f"{BASE}/chat", headers=headers, json={
-    "question": "What is photosynthesis?",
-    "session_id": "stu_42",
+    "question": "What were the key findings in Q4?",
+    "session_id": "usr_42",
 })
 
-# Student A's follow-up — same session, same thread
+# User A's follow-up — same session, same thread
 requests.post(f"{BASE}/chat", headers=headers, json={
-    "question": "And cellular respiration?",
-    "session_id": "stu_42",
+    "question": "Can you elaborate on the second point?",
+    "session_id": "usr_42",
 })
 
-# Student B — fresh, isolated history
+# User B — fresh, isolated history
 requests.post(f"{BASE}/chat", headers=headers, json={
-    "question": "Hi, can you help me?",
-    "session_id": "stu_99",
+    "question": "Summarize the meeting notes",
+    "session_id": "usr_99",
 })
 ```
 
-See [Per-end-user sessions](chat.md#per-end-user-sessions) for the full reference.
+See [Per-user sessions](chat.md#per-user-sessions) for the full reference.
 
 ## Full workflow example
 
