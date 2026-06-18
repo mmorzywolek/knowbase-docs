@@ -34,6 +34,13 @@
 * [Dropbox](connectors/dropbox.md)
 * [Web Search](connectors/web-search.md)
 
+## Use Knowbase in AI Assistants (MCP)
+
+* [Overview](mcp/README.md)
+* [Claude](mcp/claude.md)
+* [ChatGPT](mcp/chatgpt.md)
+* [Perplexity](mcp/perplexity.md)
+
 ## AI Assistants
 
 * [Overview](ai-assistants/README.md)
