@@ -30,7 +30,9 @@ Connecting adds these tools to your assistant:
 
 | Tool | What it does |
 | --- | --- |
-| `search_library` | Searches your library and returns the most relevant passages with citations |
+| `search_library` | Semantic search — returns the most relevant passages with citations. Can be scoped to specific documents |
+| `grep_library` | Exact text search (literal or regex) for precise strings — names, IDs, quotes, code — that semantic search may miss |
+| `get_document_content` | Returns the full text of a document |
 | `ask_knowbase` | Asks a question and returns a Knowbase-generated answer with sources |
 | `list_documents` | Lists the documents in your library |
 | `list_collections` | Lists your collections and their files |
