@@ -54,7 +54,7 @@ Select any part of an answer and click **Reply** — the fragment attaches to yo
 
 ## How to enable it
 
-Click the **mode selector** in the chat input and choose **Thinking Mode**.
+Thinking Mode is the **default** for library chat (Chat All). Use the **mode selector** in the chat input to switch to Fast Mode when you just need a quick lookup.
 
 <!-- screenshot: thinking-mode-toggle -->
 
@@ -69,7 +69,7 @@ Click the **mode selector** in the chat input and choose **Thinking Mode**.
 | Best for        | Quick lookups          | Deep research, summaries, hard questions |
 
 {% hint style="info" %}
-**Plan requirement:** Thinking Mode is available on Pro and Team plans.
+**Plan requirement:** Thinking Mode is available on Pro and Team plans. Because it runs multiple rounds of research per question, each Thinking Mode question counts as **5 queries** toward your monthly quota.
 {% endhint %}
 
 {% hint style="info" %}
